@@ -1,0 +1,6 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seniorkot.regioncatalog.domain.mapper.RegionMapper">
+    <resultMap id="RegionResultMap" type="com.seniorkot.regioncatalog.domain.model.Region">
+        <result column="short_name" jdbcType="VARCHAR" property="shortName" />
+    </resultMap>
+</mapper>
