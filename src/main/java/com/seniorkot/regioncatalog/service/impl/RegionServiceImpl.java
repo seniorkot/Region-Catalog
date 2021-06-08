@@ -1,5 +1,6 @@
 package com.seniorkot.regioncatalog.service.impl;
 
+import com.seniorkot.regioncatalog.controller.RegionsController;
 import com.seniorkot.regioncatalog.domain.mapper.RegionMapper;
 import com.seniorkot.regioncatalog.domain.model.Region;
 import com.seniorkot.regioncatalog.domain.model.request.RegionRequest;
@@ -8,7 +9,12 @@ import com.seniorkot.regioncatalog.utils.exception.BadInputDataException;
 import com.seniorkot.regioncatalog.utils.exception.EntityAlreadyExistsException;
 import com.seniorkot.regioncatalog.utils.exception.EntityNotFoundException;
 import com.seniorkot.regioncatalog.utils.exception.InternalServerErrorException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -30,6 +36,8 @@ public class RegionServiceImpl implements RegionService {
      */
     public static final String SERVICE_VALUE = "ProductServiceImpl";
 
+    private static final Logger logger = LogManager.getLogger(RegionServiceImpl.class);
+
     private final RegionMapper regionMapper;
 
     @Autowired
@@ -38,18 +46,23 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
+    @Cacheable(value = "regions", key = "#name")
     public List<Region> getAll(@Nullable String name) {
+        logger.debug("Getting all regions with name starts with " + name);
         return name == null ? regionMapper.getAll() :
                 regionMapper.getAllByName(name + "%"); // Starts with statement
     }
 
     @Override
+    @Cacheable(value = "regions", key = "#id")
     public Region get(@NonNull Long id) throws EntityNotFoundException {
+        logger.debug("Getting region by ID " + id);
         return regionMapper.getById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Region.class, id));
     }
 
     @Override
+    @CachePut("regions")
     public Long create(@NonNull RegionRequest request)
             throws EntityAlreadyExistsException, BadInputDataException {
         List<String> blankFields = request.getBlankRequiredFields(); // Get blank fields
@@ -69,6 +82,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
+    @CachePut("regions")
     public void update(@NonNull Long id, @NonNull RegionRequest request)
             throws EntityNotFoundException, EntityAlreadyExistsException, BadInputDataException {
         List<String> blankFields = request.getBlankRequiredFields(); // Get blank fields
@@ -88,6 +102,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
+    @CacheEvict("regions")
     public void remove(@NonNull Long id) throws EntityNotFoundException {
         regionMapper.delete(get(id));
     }
