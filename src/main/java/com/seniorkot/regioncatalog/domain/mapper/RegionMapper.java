@@ -24,6 +24,16 @@ public interface RegionMapper {
     List<Region> getAll();
 
     /**
+     * Fetches all regions from DB where full name starts with.
+     *
+     * @param name Start of the name
+     * @return {@link List} of {@link Region} entities
+     */
+    @ResultMap("RegionResultMap")
+    @Select("SELECT * FROM regions WHERE name LIKE '#{name}%'")
+    List<Region> getAllByName(@Param("name") String name);
+
+    /**
      * Fetches a region by ID.
      *
      * @param id Region ID

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-
 /**
  * Controller advice class to catch all custom 4xx and 5xx exceptions.
  *
@@ -95,5 +94,4 @@ public class HttpErrorExceptionHandler {
         logger.error("Exception: " + request.getDescription(false) + "; message=" + ex.getMessage());
         return CodeMessageResponseBuilder.internal(ex.getMessage());
     }
-
 }
