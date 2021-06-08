@@ -34,15 +34,15 @@ public class RegionMapperIntegrationTest {
 
         assertThat(region).isNotNull();
         assertThat(region.getId()).isEqualTo(1L);
-        assertThat(region.getName()).isEqualTo("г. Санкт-Петербург");
-        assertThat(region.getShortName()).isEqualTo("СПб");
+        assertThat(region.getName()).isEqualTo("Saint-Petersburg");
+        assertThat(region.getShortName()).isEqualTo("SP");
 
-        region = regionMapper.getByNames("г. Москва", "Мск").orElse(null);
+        region = regionMapper.getByNames("Moscow", "MSK").orElse(null);
 
         assertThat(region).isNotNull();
         assertThat(region.getId()).isEqualTo(2L);
-        assertThat(region.getName()).isEqualTo("г. Москва");
-        assertThat(region.getShortName()).isEqualTo("Мск");
+        assertThat(region.getName()).isEqualTo("Moscow");
+        assertThat(region.getShortName()).isEqualTo("MSK");
     }
 
     /**

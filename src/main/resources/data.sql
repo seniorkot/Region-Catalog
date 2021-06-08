@@ -1,4 +1,4 @@
-INSERT INTO regions (name, short_name) VALUES ('г. Санкт-Петербург', 'СПб');
-INSERT INTO regions (name, short_name) VALUES ('г. Москва', 'Мск');
-INSERT INTO regions (name, short_name) VALUES ('Ленинградская область', 'Лен обл.');
-INSERT INTO regions (name, short_name) VALUES ('Московская область', 'Мос обл.');
+INSERT INTO regions (name, short_name) VALUES ('Saint-Petersburg', 'SP');
+INSERT INTO regions (name, short_name) VALUES ('Moscow', 'MSK');
+INSERT INTO regions (name, short_name) VALUES ('Leningrad region', 'Len region');
+INSERT INTO regions (name, short_name) VALUES ('Moscow region', 'Mos region');
