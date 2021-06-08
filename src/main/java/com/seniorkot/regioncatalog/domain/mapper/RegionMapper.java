@@ -30,7 +30,7 @@ public interface RegionMapper {
      * @return {@link List} of {@link Region} entities
      */
     @ResultMap("RegionResultMap")
-    @Select("SELECT * FROM regions WHERE name LIKE '#{name}%'")
+    @Select("SELECT * FROM regions WHERE name LIKE #{name}")
     List<Region> getAllByName(@Param("name") String name);
 
     /**

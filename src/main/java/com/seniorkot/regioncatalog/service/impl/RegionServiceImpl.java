@@ -40,7 +40,7 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public List<Region> getAll(@Nullable String name) {
         return name == null ? regionMapper.getAll() :
-                regionMapper.getAllByName(name);
+                regionMapper.getAllByName(name + "%"); // Starts with statement
     }
 
     @Override
